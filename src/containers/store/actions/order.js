@@ -82,18 +82,3 @@ export const fetchOrders = () => {
             })
     }
 }
-
-//fetch orders
-
-export const setOrders = (orders) => {
-    return {
-        type: actionType.SET_ORDERS,
-        orders: orders
-    }
-}
-
-export const ordersFailed = () => {
-    return {
-        type: actionType.ORDERS_FAILED
-    }
-}
