@@ -5,6 +5,7 @@ import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
 import axios from '../../../axios-orders';
 import { connect } from 'react-redux';
+import { updateObject } from '../../../shared/utility';
 import * as actions from '../../store/actions/index';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
@@ -112,16 +113,14 @@ class ContactData extends Component {
         
     }
     inputChangedHandler = (event, inputIdentifier) => {
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        }
-        const updatedFormInput = {
-            ...this.state.orderForm[inputIdentifier]
-        }
-        updatedFormInput.value = event.target.value;
-        updatedFormInput.valid = this.checkValidity(updatedFormInput.value, updatedFormInput.validation);
-        updatedFormInput.touched = true;
-        updatedOrderForm[inputIdentifier] = updatedFormInput;
+        const updatedFormInput = updateObject(this.state.orderForm[inputIdentifier], {
+            value: event.target.value,
+            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            touched: true
+        });
+        const updatedOrderForm = updateObject(this.state.orderForm, {
+            [inputIdentifier]: updatedFormInput
+        });
         let formIsValid = true;
         for (let inputIdentifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
