@@ -5,7 +5,7 @@ import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
 import axios from '../../../axios-orders';
 import { connect } from 'react-redux';
-import { updateObject } from '../../../shared/utility';
+import { updateObject, checkValidity } from '../../../shared/utility';
 import * as actions from '../../store/actions/index';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
@@ -115,7 +115,7 @@ class ContactData extends Component {
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedFormInput = updateObject(this.state.orderForm[inputIdentifier], {
             value: event.target.value,
-            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
             touched: true
         });
         const updatedOrderForm = updateObject(this.state.orderForm, {
@@ -126,27 +126,6 @@ class ContactData extends Component {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
         }
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid})
-    }
-    checkValidity(value, rules) {
-        let isValid = true;
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        if (rules.isEmail) {
-            const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-            isValid = value.match(mailFormat) && isValid;
-        }
-        if (rules.isNumeric) {
-            const regExp = /^\d+$/;
-            isValid = value.match(regExp) && isValid; 
-        }
-        return isValid;
     }
     render() {
         let formElementsArray = [];
