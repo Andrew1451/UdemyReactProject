@@ -4,11 +4,10 @@ import * as actions from '../../../containers/store/actions/index';
 import { Redirect } from 'react-router-dom';
 
 const Logout = props => {
-
+    const { onLogout } = props;
     useEffect(() => {
-        props.onLogout();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        onLogout();
+    }, [onLogout]);
 
     return <Redirect to='/'/>
 }

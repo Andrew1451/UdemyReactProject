@@ -10,10 +10,10 @@ const Orders = props => {
     // componentDidMount() {
     //     this.props.onFetchOrders(this.props.token, this.props.userId)
     // }
+    const { onFetchOrders, token, userId } = props;
     useEffect(() => {
-        props.onFetchOrders(props.token, props.userId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        onFetchOrders(token, userId);
+    }, [onFetchOrders, token, userId]); 
     let orders = <Spinner />;
     if (!props.loading) {
         orders = props.orders.map(order => (

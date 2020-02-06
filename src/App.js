@@ -19,11 +19,10 @@ const Auth = React.lazy(() => {
 });
 
 const App = props => {
-
+  const { onTryAutoSignup } = props;
   useEffect(() => {
-    props.onTryAutoSignup();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    onTryAutoSignup();
+  }, [onTryAutoSignup]);
   // componentDidMount() {
   //   this.props.onTryAutoSignup();
   // }
